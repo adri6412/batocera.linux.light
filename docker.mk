@@ -23,7 +23,7 @@ UID  := $(shell id -u)
 GID  := $(shell id -g)
 
 define RUN_DOCKER
-	$(DOCKER) run -t --init --rm \
+	$(DOCKER) run $(if $(BATCH_MODE),,-t )--init --rm \
 		-e HOME \
 		-v $(PROJECT_DIR):/build \
 		-v $(DL_DIR):/build/buildroot/dl \

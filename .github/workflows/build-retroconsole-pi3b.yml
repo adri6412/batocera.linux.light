@@ -24,11 +24,10 @@ jobs:
 
     - name: Build the image
       run: |
-        make batocera-bcm2837_defconfig
-        make
+        make bcm2837-build BATCH_MODE=1
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
         name: retroconsole-pi3b-image
-        path: output/images/batocera-bcm2837.img.gz
+        path: output/bcm2837/images/batocera/images/bcm2837/batocera-*.img.gz
