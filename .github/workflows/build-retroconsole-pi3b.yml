@@ -24,7 +24,7 @@ jobs:
 
     - name: Build the image
       run: |
-        make bcm2837-build
+        make bcm2837-build BATCH_MODE=1
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
