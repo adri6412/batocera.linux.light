@@ -316,7 +316,7 @@ $(TARGET_DEFCONFIG_PATTERN): $(TARGET_BOARD_FILE_PATTERN) \
 
 %-config: %-defconfig | $(DOCKER_IMAGE_AVAILABLE) $(DL_DIR_INITIALIZED) $(CCACHE_DIR_INITIALIZED) $(TARGET_OUTPUT_DIR_INITIALIZED)
 	@$(call MESSAGE,Generating buildroot makefile)
-	@$(MAKE_BUILDROOT) batocera-$*_defconfig
+	@$(MAKE_BUILDROOT) defconfig DEFCONFIG=$(if $(DIRECT_BUILD),$(TARGET_DEFCONFIG),/build/configs/batocera-$*_defconfig)
 
 %-build: %-config
 	@$(call MESSAGE,$(or $(BUILD_MESSAGE),Building $(or $(CMD),image)))
