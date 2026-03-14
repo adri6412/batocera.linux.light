@@ -314,7 +314,11 @@ $(TARGET_DEFCONFIG_PATTERN): $(TARGET_BOARD_FILE_PATTERN) \
 %-defconfig: $(TARGET_DEFCONFIG_PATTERN) | %-supported
 	@:
 
-%-config: %-defconfig | $(DOCKER_IMAGE_AVAILABLE) $(DL_DIR_INITIALIZED) $(CCACHE_DIR_INITIALIZED) $(TARGET_OUTPUT_DIR_INITIALIZED)
+$(PROJECT_DIR)/buildroot/Makefile:
+	@$(call MESSAGE,Initializing git submodules)
+	@git submodule update --init --recursive
+
+%-config: %-defconfig | $(DOCKER_IMAGE_AVAILABLE) $(DL_DIR_INITIALIZED) $(CCACHE_DIR_INITIALIZED) $(TARGET_OUTPUT_DIR_INITIALIZED) $(PROJECT_DIR)/buildroot/Makefile
 	@$(call MESSAGE,Generating buildroot makefile)
 	@$(MAKE_BUILDROOT) defconfig DEFCONFIG=$(if $(DIRECT_BUILD),$(TARGET_DEFCONFIG),/build/configs/batocera-$*_defconfig)
 
